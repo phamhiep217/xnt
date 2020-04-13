@@ -6,7 +6,7 @@ const env = process.env;
 //     console.info('**********');
 // };
 export default {
-    mongodbUri: 'mongodb://localhost:27017/test',
+    mongodbUri: 'mongodb://localhost:27017/logistic',
     port: env.PORT || 5001,
     host: env.HOST || '0.0.0.0',
     get serverUrl() {
