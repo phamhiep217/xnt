@@ -67,7 +67,7 @@ router.get("/", (req, res, next) => {
 });
 
 router.post("/", upload.single("productImge"), (req, res, next) => {
-  console.log(req.file);
+  console.log(req.file);console.log(req.body);
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
@@ -106,7 +106,6 @@ router.get("/:productId", (req, res, next) => {
     .select("name price _id productImage")
     .exec()
     .then((doc) => {
-      console.log("From database", doc);
       if (doc) {
         res.status(200).json({
           product: doc,
@@ -122,7 +121,6 @@ router.get("/:productId", (req, res, next) => {
       }
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).json({ error: err });
     });
 });
@@ -167,7 +165,6 @@ router.delete("/:productId", (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
       res.status(500).json({
         error: err,
       });

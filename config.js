@@ -6,13 +6,29 @@ const env = process.env;
 //     console.info('**********');
 // };
 export default {
-    mongodbUri: 'mongodb://localhost:27017/logistic',
-    jwt_key: "secret",
-    port: env.PORT || 5001,
-    host: env.HOST || '0.0.0.0',
-    get serverUrl() {
-        return `http://${this.host}:${this.port}`;
-    }
+  mongodbUri: "mongodb://localhost:27017/logistic",
+  jwt_key: "secret",
+  port: env.PORT || 5001,
+  host: env.HOST || "0.0.0.0",
+  get serverUrl() {
+    return `http://${this.host}:${this.port}`;
+  },
+  sqlserver: {
+    database: "100",
+    server: "localhost",
+    driver: "msnodesqlv8",
+    options: {
+      trustedConnection: true,
+    },
+  },
+  sqlserver200: {
+    database: "200",
+    server: "localhost",
+    driver: "msnodesqlv8",
+    options: {
+      trustedConnection: true,
+    },
+  },
 };
 //404 ko tim thay trang
 //500 loi tren server

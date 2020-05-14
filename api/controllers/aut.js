@@ -26,6 +26,7 @@ exports.aut_get_all = (req, res, next) => {
 exports.aut_get_by_id = (req, res, next) => {
     const _id = req.params.empId;
     Emp.findById(_id)
+      .select("_id EmpCode EmpName EmpPhone EmpEmail EmpUserName Status EmpRole")
       .exec()
       .then((objEmp) => {
         console.log(objEmp);
@@ -48,7 +49,7 @@ exports.aut_get_by_id = (req, res, next) => {
   }
 
   exports.aut_login = (req, res, next) => {
-    Emp.find({ EmpUserName: req.body.EmpUserName })
+    Emp.find({ EmpUserName: req.body.username })
       .exec()
       .then((user) => {
         if (user.length < 1) {
@@ -57,7 +58,7 @@ exports.aut_get_by_id = (req, res, next) => {
           });
         }
         bcrypt.compare(
-          req.body.EmpUserPass,
+          req.body.password,
           user[0].EmpUserPass,
           (err, result) => {
             if (err) {
@@ -70,16 +71,17 @@ exports.aut_get_by_id = (req, res, next) => {
               const token = jwt.sign(
                 {
                   EmpUserName: user[0].EmpUserName,
-                  EmpUserID: user[0]._id,
+                  EmpUserId: user[0]._id,
                 },
                 config.jwt_key,
-                {
-                  expiresIn: "1h",
-                }
+                // {
+                //   expiresIn: "1h",
+                // }
               );
               return res.status(200).json({
                 message: "Đăng nhập thành công",
-                token: token
+                token: token,
+                EmpUserId: user[0]._id
               });
             }
             res.status(401).json({

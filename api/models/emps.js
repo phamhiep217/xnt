@@ -18,4 +18,4 @@ const empSchema = mongoose.Schema({
   EmpRole: { type: [Number], required: true },
 });
 
-module.exports = mongoose.model("emps", empSchema);
+module.exports = mongoose.model("emp", empSchema);

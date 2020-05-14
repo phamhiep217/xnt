@@ -2,6 +2,7 @@ import express from "express";
 import autRouter from "./api/routes/aut";
 import orderRouter from "./api/routes/orders";
 import productRouter from "./api/routes/products";
+import inventoryRouter from './api/routes/inventory';
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import config from "./config";
@@ -27,7 +28,7 @@ app.use((req, res, next) => {
     "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   if (req.method === "OPTIONS") {
-    Response.header(
+    res.header(
       "Access-Control-Allow-Methods",
       "PUT, POST, PATCH, DELETE, GET"
     );
@@ -38,6 +39,7 @@ app.use((req, res, next) => {
 app.use("/aut", autRouter);
 app.use("/product", productRouter);
 app.use("/order", orderRouter);
+app.use("/inventory", inventoryRouter);
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
