@@ -13,7 +13,7 @@ const invSchema = mongoose.Schema({
     invYear: {type: Number, required: true},
     invCompany: {type: String, required: true},
     invWarehouse:{type: String, required: true},
-    Status: {type: String, required: true}
+    status: {type: String, required: true}
 });
 
 module.exports = mongoose.model("inventory", invSchema);

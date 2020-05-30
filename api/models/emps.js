@@ -14,7 +14,7 @@ const empSchema = mongoose.Schema({
   EmpEmail: {type: String, required: true},
   EmpUserName: { type: String, required: true },
   EmpUserPass: { type: String, required: true },
-  Status: { type: String, required: true },
+  status: { type: String, required: true },
   EmpRole: { type: [Number], required: true },
 });
 

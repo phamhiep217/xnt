@@ -1,6 +1,7 @@
 import express from "express";
+import purchaseRouter from "./api/routes/purchase";
 import autRouter from "./api/routes/aut";
-import orderRouter from "./api/routes/orders";
+import paymentRouter from "./api/routes/payment";
 import productRouter from "./api/routes/products";
 import inventoryRouter from './api/routes/inventory';
 import bodyParser from "body-parser";
@@ -38,8 +39,9 @@ app.use((req, res, next) => {
 });
 app.use("/aut", autRouter);
 app.use("/product", productRouter);
-app.use("/order", orderRouter);
+app.use("/payment", paymentRouter);
 app.use("/inventory", inventoryRouter);
+app.use("/purchase", purchaseRouter);
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;
