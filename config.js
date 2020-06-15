@@ -9,7 +9,7 @@ export default {
   mongodbUri: "mongodb://192.168.5.107:27017/logistic",
   jwt_key: "secret",
   port: env.PORT || 5001,
-  host: env.HOST || "0.0.0.0",
+  host: env.HOST || "127.0.0.1",
   get serverUrl() {
     return `http://${this.host}:${this.port}`;
   },

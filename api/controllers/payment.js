@@ -20,9 +20,9 @@ exports.payment_get_all = (req, res, next) => {
 exports.insert_payment = (req, res, next) => {
     const payment = new PaymentSchema({
         _id: new mongoose.Types.ObjectId(),
-        payName: req.Name,
-        payNum: req.Num,
-        payStyle: req.Style,
+        payName: req.body.payName,
+        payNum: req.body.payNum,
+        payStyle: req.body.payStyle,
         status: "active"
     });
     payment

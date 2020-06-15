@@ -29,7 +29,7 @@ const upload = multer({
 });
 
 router.get("/", ProductController.product_get_all);
-router.get("/", ProductController.insert_product);
+router.post("/", ProductController.insert_product);
 router.get("/:productId", ProductController.get_product_by_id);
 router.patch("/:productId", ProductController.update_product_by_id);
 router.delete("/:productId", ProductController.delete_product_by_id);

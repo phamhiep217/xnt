@@ -29,7 +29,6 @@ exports.aut_get_by_id = (req, res, next) => {
       .select("_id EmpCode EmpName EmpPhone EmpEmail EmpUserName Status EmpRole")
       .exec()
       .then((objEmp) => {
-        console.log(objEmp);
         if (objEmp) {
           res.status(200).json({
             message: "Handing GET request to /emp/:empId",

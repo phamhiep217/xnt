@@ -15,10 +15,10 @@ const productSchema = mongoose.Schema({
     proCode3: {type:String, required: true},
     proMin: {type:Number, required: true},
     proPacking: {type:Number, required: true},
-    proUOM: {type:String, required: true},
-    proLeadTime: {type: String, required: true},
+    proUOM: {type:String},
+    proLeadTime: {type: String},
     productImage: {type: String},
-    active: {type: String, required: true}
+    status: {type: String, required: true}
 });
 
 module.exports = mongoose.model('product', productSchema);
