@@ -2,7 +2,7 @@ import SupplySchema from "../models/supply";
 import mongoose from "mongoose";
 
 exports.supply_get_all = (req, res, next) => {
-    SupplySchema.find({status: "active"})
+    SupplySchema.find({status: "active"}).sort({_id:-1})
     .exec()
     .then((lstSupply) => {
         res.status(200).json({
@@ -61,7 +61,7 @@ exports.update_Supply_by_id = (req, res, next) => {
     for (const ops of req.body) {
         updateOps[ops.propName] = ops.value;
     }
-    SupplySchema.update({_id:id},{$set: updateOps})
+    SupplySchema.findOneAndUpdate({_id:id},{$set: updateOps},{returnOriginal : false})
     .exec()
     .then((objSupply) => {
         res.status(200).json({

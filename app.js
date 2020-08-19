@@ -22,13 +22,14 @@ mongoose.connect(config.mongodbUri, {
 });
 mongoose.Promise = global.Promise;
 app.use("/upload", express.static("upload"));
+app.use("/public", express.static("public"));
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Disposition"
   );
   if (req.method === "OPTIONS") {
     res.header(

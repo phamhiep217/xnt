@@ -30,7 +30,6 @@ exports.calculator_stock_movement = (req, res, next) => {
     rptMonth: req.params.month,
     rptYear: req.params.year,
   };
-  console.log(filter);
   calculator_stock(filter.rptMonth, filter.rptYear, filter.status)
     .then((listReport) => {
       res.status(200).json({
@@ -152,20 +151,20 @@ async function calculator_stock(month, year, status) {
             $project: {
               _id: 0,
               purProductId: 1,
-              purQuality: 1,
+              purQuantity: 1,
               inTranset: {
                 $cond: [
                   {
                     $and: [
                       {
-                        $eq: ["$purShipmentCode", "null"],
+                        $eq: ["$purShipmentCode", ""],
                       },
                       {
-                        $eq: ["$purShipmentNote", "null"],
+                        $eq: ["$purShipmentNote", ""],
                       },
                     ],
                   },
-                  "$purQuality",
+                  "$purQuantity",
                   0,
                 ],
               },
@@ -174,14 +173,14 @@ async function calculator_stock(month, year, status) {
                   {
                     $and: [
                       {
-                        $eq: ["$purShipmentCode", "null"],
+                        $eq: ["$purShipmentCode", ""],
                       },
                       {
-                        $ne: ["$purShipmentNote", "null"],
+                        $ne: ["$purShipmentNote", ""],
                       },
                     ],
                   },
-                  "$purQuality",
+                  "$purQuantity",
                   0,
                 ],
               },
@@ -191,7 +190,7 @@ async function calculator_stock(month, year, status) {
             $group: {
               _id: "$purProductId",
               totalQty: {
-                $sum: "$purQuality",
+                $sum: "$purQuantity",
               },
               inTransetQty: {
                 $sum: "$inTranset",

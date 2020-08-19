@@ -2,7 +2,7 @@ import PartShipSchema from "../models/partship";
 import mongoose from "mongoose";
 
 exports.partship_get_all = (req, res, next) => {
-    PartShipSchema.find({status: "active"})
+    PartShipSchema.find({status: "active"}).sort({_id:-1})
     .exec()
     .then((lstPartShip) => {
         res.status(200).json({
@@ -41,7 +41,7 @@ exports.insert_partship = (req, res, next) => {
 }
 
 exports.get_partship_by_id = (req, res, next) => {
-    const id = req.params.partshipId;
+    const id = req.params.ParPurchasingId;
     PartShipSchema.findById(id)
     .exec()
     .then((objPartShip) => {
@@ -61,7 +61,7 @@ exports.update_payment_by_id = (req, res, next) => {
     for (const ops of req.body) {
         updateOps[ops.propName] = ops.value;
     }
-    PartShipSchema.update({_id:id},{$set: updateOps})
+    PartShipSchema.findOneAndUpdate({_id:id},{$set: updateOps},{returnOriginal : false})
     .exec()
     .then((objPartShip) => {
         res.status(200).json({

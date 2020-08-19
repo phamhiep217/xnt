@@ -2,7 +2,7 @@ import PaymentSchema from "../models/payment";
 import mongoose from "mongoose";
 
 exports.payment_get_all = (req, res, next) => {
-    PaymentSchema.find({status: "active"})
+    PaymentSchema.find({status: "active"}).sort({_id:-1})
     .exec()
     .then((listPayment) => {
         res.status(200).json({
@@ -62,7 +62,7 @@ exports.update_payment_by_id = (req, res, next) => {
     for (const ops of req.body) {
         updateOps[ops.propName] = ops.value;
     }
-    PaymentSchema.update({_id:id}, {$set: updateOps})
+    PaymentSchema.findOneAndUpdate({_id:id}, {$set: updateOps},{returnOriginal : false})
     .exec()
     .then((objPayment) => {
         res.status(200).json({

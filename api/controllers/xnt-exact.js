@@ -121,7 +121,7 @@ async function getInsertData(result, inData) {
       invYear: inData.year,
       invCompany: inData.company,
       invWarehouse: item.Warehouse,
-      Status: "active",
+      status: "active",
     });
     await objInv
       .save()

@@ -10,7 +10,7 @@ const purchaseSchema = mongoose.Schema({
   purSupply: { type: String, required: true },
   purDate: { type: Date, required: true },
   purContract: { type: String, required: true },
-  purQuality: { type: String, required: true }, // tt số lượng mua trong kỳ
+  purQuantity: { type: String, required: true }, // tt số lượng mua trong kỳ
   purAmt: { type: String, required: true },
   purTotalAmt: { type: String, required: true },
   purETADate: { type: Date, required: true },
@@ -28,6 +28,8 @@ const purchaseSchema = mongoose.Schema({
   purImTax: { type: String, required: true },
   purForm: { type: String, required: true },
   purStyle: { type: String, required: true },
+  purPartShip: { type: String, required: true},
+  purRemaining: {type: Number, required: true},
   status: { type: String, required: true },
 });
 

@@ -35,7 +35,7 @@ exports.insert_product = (req, res, next) => {
     proUOM: req.body.proUOM,
     proLeadTime: req.body.proLeadTime,
     productImage: "null",
-    active: "active"
+    status: "active"
   });
   product
     .save()
@@ -76,7 +76,7 @@ exports.update_product_by_id = (req, res, next) => {
   for (const ops of req.body) {
     updateOps[ops.propName] = ops.value;
   }
-  ProductSchema.update({ _id: id }, { $set: updateOps })
+  ProductSchema.findOneAndUpdate({ _id: id }, { $set: updateOps },{returnOriginal : false})
     .exec()
     .then((objProduct) => {
       res.status(200).json({

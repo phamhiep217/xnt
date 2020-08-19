@@ -2,9 +2,33 @@ import PurchaseSchema from "../models/purchase";
 import mongoose from "mongoose";
 
 exports.purchase_get_all = (req, res, next) => {
-  PurchaseSchema.find({ status: "active" })
+  PurchaseSchema.aggregate([
+    {
+      $lookup: {
+        from: "supplies",
+        localField: "purSupply",
+        foreignField: "supNo",
+        as: "sup",
+      },
+    },
+    {
+      $lookup: {
+        from: "products",
+        localField: "purProductId",
+        foreignField: "_id",
+        as: "pro",
+      },
+    },
+  ])
+    .sort({ _id: -1 })
     .exec()
     .then((listPurchse) => {
+      listPurchse = listPurchse.map((obj) => {
+        if (obj.pro.length > 0) {
+          var item = Object.assign(obj, obj.pro[0], obj.sup[0]);
+          return item;
+        }
+      });
       res.status(200).json({
         message: "lay danh sach don dat hang",
         data: listPurchse,
@@ -24,7 +48,7 @@ exports.insert_purchase = (req, res, next) => {
     purSupply: req.body.Supply,
     purDate: req.body.Date,
     purContract: req.body.Contract,
-    purQuality: req.body.Quality,
+    purQuantity: req.body.Quantity,
     purAmt: req.body.Amt,
     purTotalAmt: req.body.TotalAmt,
     purETADate: req.body.ETADate,
@@ -42,6 +66,8 @@ exports.insert_purchase = (req, res, next) => {
     purImTax: req.body.ImTax,
     purForm: req.body.Form,
     purStyle: req.body.Style,
+    purPartShip: "",
+    purRemaining: 0,
     status: "active",
   });
   purchase
@@ -81,7 +107,11 @@ exports.update_purchase_by_id = (req, res, next) => {
   for (const ops of req.body) {
     updateOps[ops.propName] = ops.value;
   }
-  PurchaseSchema.update({ _id: id }, { $set: updateOps })
+  PurchaseSchema.findOneAndUpdate(
+    { _id: id },
+    { $set: updateOps },
+    { returnOriginal: false }
+  )
     .exec()
     .then((objpurchase) => {
       res.status(200).json({
